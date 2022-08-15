@@ -1,0 +1,4 @@
+[
+    "shiitake",
+    "shishkebab"
+]
