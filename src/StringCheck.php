@@ -7,7 +7,9 @@ use ClaraLeigh\NaughtyUsername\Traits\ReadFileToArray;
 class StringCheck
 {
     use ReadFileToArray;
+    public bool $debug = false;
     private array $censorChecks;
+    private array $censorChecksOg;
     private array $whitelist = [];
     public array $badwords = [];
 
@@ -76,21 +78,29 @@ class StringCheck
         $censorChecks = array();
         for($i = 0, $max = count($badwords); $i < $max; $i++) {
             $word = $badwords[$i];
+            if (strlen($word) <= 3) {
+                continue;
+            }
             $word = str_ireplace(array_keys($leet_replace), array_values($leet_replace), $word);
             $censorChecks[$i] = '/' . $word . '/i';
+            $censorCheckOg[$i] = $badwords[$i];
         }
 
         $this->censorChecks = $censorChecks;
+        $this->censorChecksOg = $censorCheckOg;
     }
-    
+
     public function validateString(string $string): bool
     {
         if (empty($this->censorChecks)) {
             $this->generateCensorChecks();
         }
         $string = $this->replaceWhiteListedWords($string);
-        foreach ($this->censorChecks as $censorCheck) {
+        foreach ($this->censorChecks as $key => $censorCheck) {
             if (preg_match($censorCheck, $string)) {
+                if ($this->debug) {
+                    echo 'Found: ' . $this->censorChecksOg[$key] . ' in: ' . $string . PHP_EOL;
+                }
                 return false;
             }
         }
