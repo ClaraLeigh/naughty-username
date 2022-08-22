@@ -3,6 +3,7 @@
     ".htaccess",
     ".htpasswd",
     ".well-known",
+    "youpay",
     "400",
     "401",
     "403",
