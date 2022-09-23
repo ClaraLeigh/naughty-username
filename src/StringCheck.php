@@ -74,6 +74,7 @@ class StringCheck
         $leet_replace['x'] = '(x|x\.|x\-|Χ|χ)';
         $leet_replace['y'] = '(y|y\.|y\-|¥|γ|ÿ|ý|Ÿ|Ý)';
         $leet_replace['z'] = '(z|z\.|z\-|Ζ)';
+        $leet_replace[' '] = '( |\.|\-|_)';
 
         $censorChecks = array();
         for($i = 0, $max = count($badwords); $i < $max; $i++) {
